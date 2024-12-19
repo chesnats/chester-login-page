@@ -71,7 +71,6 @@ Freelance: <span>Available</span>                                 Address: <span
 Phone: <span>09491735243</span>                              Email: <span>klaychestermans425@gmail.com</span> 
 
 Skype: <span>Chester Manolo - IT Dev</span>             Languages: <span>Bisaya, Tagalog, English</span></pre>
-
                                     <div>
                                 <div>
                             <div>
@@ -307,33 +306,33 @@ At praesentium odit deserunt labore!</pre>
     <h1 class="post">POSTS</h1>
     <h2 class="blog"><span>MY</span> BLOG</h2>
 </div>
-
-        <div class="blog-images">
-                <a href="error" class="blog-image">
-                    <img src="@/assets/image_2024_10_08T03_17_56_067Z.png" class="image">
-                </a>
-                <a href="error" class="blog-image">
-                    <img src="@/assets/image_2024_10_11T07_22_38_025Z.png" class="image">
-                </a>
-                <a href="error" class="blog-image">
-                    <img src="@/assets/image_-1.png" class="image">
-                </a>
-                <a href="error" class="blog-image">
-                    <img src="@/assets/ariel.png" class="image">
-                </a>
-                <a href="error" class="blog-image">
-                    <img src="@/assets/image_2024_10_08T03_13_14_527Z.png" class="image">
-                </a>
-                <a href="error" class="blog-image">
-                    <img src="@/assets/image_2024_09_30T04_48_39_382Z.png" class="image">
-                </a>
-             </div>
+    <div class="blog-images">
+            <a href="error" class="blog-image">
+                <img src="@/assets/image_2024_10_08T03_17_56_067Z.png" class="image">
+            </a>
+            <a href="error" class="blog-image">
+                <img src="@/assets/image_2024_10_11T07_22_38_025Z.png" class="image">
+            </a>
+            <a href="error" class="blog-image">
+                <img src="@/assets/image_-1.png" class="image">
+            </a>
+            <a href="error" class="blog-image">
+                <img src="@/assets/ariel.png" class="image">
+            </a>
+            <a href="error" class="blog-image">
+                <img src="@/assets/image_2024_10_08T03_13_14_527Z.png" class="image">
+            </a>
+            <a href="error" class="blog-image">
+                <img src="@/assets/image_2024_09_30T04_48_39_382Z.png" class="image">
+            </a>
+            </div>
             
 <div class="under-cons">@ 2024 Chester Manolo. All rights reserved</div>
 <a href="#home" class="scroll-to-top">↑</a>
 </section>
   </div>
 </template>
+
 <script>
 import Loading from "@/components/Loading.vue"; 
 import Modal   from '@/components/Modal.vue';
@@ -375,6 +374,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .logout-button {
   display: block;

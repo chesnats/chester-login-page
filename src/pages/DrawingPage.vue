@@ -16,11 +16,11 @@
     <h2 class="empathy">CHARACTER DESIGN</h2>
     <div class="portfolio">
         <img src="@/assets/Image 1.png"  class="portfolio_img">
-        <img src="@/assets/kayl.png"  class="portfolio_img">
-        <img src="@/assets/melbert.png" class="portfolio_img">
-        <img src="@/assets/melbert1.png"  class="portfolio_img">
-        <img src="@/assets/victor.png"  class="portfolio_img">
-        <img src="@/assets/victor1.png" class="portfolio_img">
+        <img src="@/assets/kayl.png"     class="portfolio_img">
+        <img src="@/assets/melbert.png"  class="portfolio_img">
+        <img src="@/assets/melbert1.png" class="portfolio_img">
+        <img src="@/assets/victor.png"   class="portfolio_img">
+        <img src="@/assets/victor1.png"  class="portfolio_img">
     </div>
 </section>
 <section class="button">
