@@ -180,7 +180,7 @@ h1 {
   color: #ffffff;
   font-size: 15px;
   padding-bottom: 25px;
-  font-family: sans-serif;
+  font-family: 'Arial', sans-serif;
   font-style: italic;
 }
 .logo1 {

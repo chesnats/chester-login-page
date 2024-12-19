@@ -43,11 +43,11 @@ export default {
 <style scoped>
 .theft h1{
   color: aliceblue;
-  font-family: roboto;
+  font-family: 'Arial', sans-serif;
   font-size: 4rem;
 }
 .theft p{
-  font-family: roboto;
+  font-family: 'Arial', sans-serif;
   font-size: 2rem;
   color: aliceblue;
 }

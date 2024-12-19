@@ -148,7 +148,7 @@ body:has(:not(:target)) .scroll-to-top {
 }
 
 .mans-navbar h1 {
-    font: normal normal bold 40px/29px Roboto;
+    font: normal normal bold 40px/29px 'Arial', sans-serif;
     text-shadow: 1px 1px 10px #FFA200;
     letter-spacing: 20px;
     color: #FFA200;
@@ -162,7 +162,7 @@ body:has(:not(:target)) .scroll-to-top {
     
 }
 .home {
-    font: normal normal normal 13px/15px Roboto;
+    font: normal normal normal 13px/15px 'Arial', sans-serif;
     color: #FFFFFF;
     padding: 10px;
     position: relative;
@@ -209,7 +209,7 @@ body:has(:not(:target)) .scroll-to-top {
     flex-direction: column;      
 }
 .paragraph {
-    font: normal normal bold 70px/60px Roboto; 
+    font: normal normal bold 70px/60px 'Arial', sans-serif; 
     color: #FFA200;
     text-align: center;           
     padding-top: 15%;       
@@ -218,7 +218,7 @@ body:has(:not(:target)) .scroll-to-top {
     max-width: 900px; 
 }
 .empathy{
-    font: normal normal bold 50px/39px Roboto;
+    font: normal normal bold 50px/39px 'Arial', sans-serif;
     color: #FFA200;
     padding-bottom: 5%;
 }
@@ -254,7 +254,7 @@ body:has(:not(:target)) .scroll-to-top {
     text-align: center;
     margin-top: 10%;
     margin-bottom: 3%;
-    font: normal normal 300 15px/16px Roboto;
+    font: normal normal 300 15px/16px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 
@@ -262,7 +262,7 @@ body:has(:not(:target)) .scroll-to-top {
     text-align: center;
     margin-top: 2%;
     margin-bottom: 3%;
-    font: normal normal 300 15px/16px Roboto;
+    font: normal normal 300 15px/16px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 .mail{
@@ -277,12 +277,12 @@ body:has(:not(:target)) .scroll-to-top {
 }
 .mail h1{
     color: #FFA200;
-    font: normal normal bold 55px/10vh Roboto;
+    font: normal normal bold 55px/10vh 'Arial', sans-serif;
     margin-bottom: .5em;
 }
 .contact_link{
     text-decoration: none;
-    font: normal normal bold 30px Roboto;
+    font: normal normal bold 30px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 .contact_link:hover{

@@ -267,7 +267,7 @@ body:has(:not(:target)) .scroll-to-top {
     text-align: center;
     margin-top: 10%;
     margin-bottom: 3%;
-    font: normal normal 300 15px/16px Roboto;
+    font: normal normal 300 15px/16px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 
@@ -275,7 +275,7 @@ body:has(:not(:target)) .scroll-to-top {
     text-align: center;
     margin-top: 10%;
     margin-bottom: 3%;
-    font: normal normal 300 15px/16px Roboto;
+    font: normal normal 300 15px/16px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 .mail{
@@ -290,12 +290,12 @@ body:has(:not(:target)) .scroll-to-top {
 }
 .mail h1{
     color: #FFA200;
-    font: normal normal bold 55px/10vh Roboto;
+    font: normal normal bold 55px/10vh 'Arial', sans-serif;
     margin-bottom: .5em;
 }
 .contact_link{
     text-decoration: none;
-    font: normal normal bold 30px Roboto;
+    font: normal normal bold 30px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 .contact_link:hover{

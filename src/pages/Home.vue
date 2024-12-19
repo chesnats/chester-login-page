@@ -595,7 +595,7 @@ export default {
 .about{
     text-align: center;
     color: #FFA200;
-    font: normal normal bold 60px/10vh R'Arial', sans-serif;
+    font: normal normal bold 60px/10vh 'Arial', sans-serif;
     margin-top: -10vh;
 
 }
