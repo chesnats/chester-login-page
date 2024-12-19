@@ -423,7 +423,7 @@ export default {
     justify-content: space-between;
 }
 .mans-navbar h1 {
-    font: normal normal bold 30px/29px Roboto;
+    font: normal normal bold 30px/29px 'Arial', sans-serif;
     color: #FFA200;
     margin: 0;
 }
@@ -432,7 +432,7 @@ export default {
     gap: 40px;
 }
 .home {
-    font: normal normal normal 13px/15px Roboto;
+    font: normal normal normal 13px/15px 'Arial', sans-serif;
     color: #FFFFFF;
     padding: 10px;
     position: relative;
@@ -495,7 +495,7 @@ export default {
   color: #e1e1e1;
 }
 .text {
-  font: normal normal bold 50px/39px Roboto;
+  font: normal normal bold 50px/39px 'Arial', sans-serif;
   color: #FFA200;
 }
 .text1 {
@@ -504,7 +504,7 @@ export default {
 }
 .paragraph {
   margin-left: 34px;
-  font: normal normal 300 15px/20px Roboto;
+  font: normal normal 300 15px/20px 'Arial', sans-serif;
   color: #b2b2b2;
 }
 .more {
@@ -512,7 +512,7 @@ export default {
     margin-top: 10px;
     width: 175px;
     height: 39px;
-    font: 12px/14px Roboto;
+    font: 12px/14px 'Arial', sans-serif;
     color: #ffffff;
     text-align: center;
     line-height: 39px;
@@ -567,7 +567,7 @@ export default {
     text-align: center;
     width: 100%;
     height: 50px;
-    font: normal normal 300 18px/20px Roboto;
+    font: normal normal 300 18px/20px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 .playlist {
@@ -588,14 +588,14 @@ export default {
 }
 .resume{
     text-align: center;
-    font: normal normal bold 100px/10vh Roboto;
+    font: normal normal bold 100px/10vh 'Arial', sans-serif;
     color: #4E4C4C;
     margin: 0;
 }
 .about{
     text-align: center;
     color: #FFA200;
-    font: normal normal bold 60px/10vh Roboto;
+    font: normal normal bold 60px/10vh R'Arial', sans-serif;
     margin-top: -10vh;
 
 }
@@ -607,13 +607,13 @@ span{
     justify-content: left;
     margin-top: 6%;
     margin-left: 12%;
-    font: normal normal normal 30px/24px Roboto;
+    font: normal normal normal 30px/24px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 .name {
     margin-top: 2%;
     margin-left: 12%;
-    font: normal normal 300 15px/16px Roboto;
+    font: normal normal 300 15px/16px 'Arial', sans-serif;
     color: #8b8b8b;
 }
 .about-con {
@@ -641,12 +641,12 @@ span{
     text-align: center;
 }
 .years h1 {
-    font: normal normal normal 30px/37px Roboto;
+    font: normal normal normal 30px/37px 'Arial', sans-serif;
     color: #FFA200;
     margin: 0;
 }
 .years p {
-    font: normal normal normal 10px/13px Roboto;
+    font: normal normal normal 10px/13px 'Arial', sans-serif;
     color: #FFFFFF;
     margin-top: 5px;
 }
@@ -689,7 +689,7 @@ span{
     width: 100%;
     text-align: center;
     padding-top: 13%;
-    font: normal normal normal 20px/24px Roboto;
+    font: normal normal normal 20px/24px 'Arial', sans-serif;
     color: #FFFFFF;
 
 }
@@ -698,7 +698,7 @@ span{
     justify-content: center;
     align-items: center;
     margin-top: 8%;
-    font: normal normal normal 20px/24px Roboto;
+    font: normal normal normal 20px/24px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 .circle:hover{
@@ -730,11 +730,11 @@ span{
     align-items: center;
     justify-content: center;
     color: #FFFFFF;
-    font: normal normal normal 15px/18px Roboto;
+    font: normal normal normal 15px/18px 'Arial', sans-serif;
     margin-bottom: 10px; 
 }
 .circle-text {
-    font: normal normal normal 12px/14px Roboto;
+    font: normal normal normal 12px/14px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 .experience{
@@ -742,7 +742,7 @@ span{
     justify-content: center;
     align-items: center;
     margin-top: 8%;
-    font: normal normal normal 20px/24px Roboto;
+    font: normal normal normal 20px/24px 'Arial', sans-serif;
     letter-spacing: 0px;
     color: #FFFFFF;
 }
@@ -761,7 +761,7 @@ span{
     display: flex;
     align-items: center;
     justify-content: center;
-    font: normal normal normal 10px/11px Roboto;
+    font: normal normal normal 10px/11px 'Arial', sans-serif;
     color: #FFFFFF;
     width: 90px;       
     height: 15px;       
@@ -774,13 +774,13 @@ span{
 .designer h1 {
     margin-top: 1%;
     margin-left: 13%;  
-    font: normal normal normal 15px/17px Roboto; 
+    font: normal normal normal 15px/17px 'Arial', sans-serif; 
     letter-spacing: 0px;
     color: #FFFFFF;
 }
 .designer pre {
     margin-left: 12%;    
-    font: normal normal 300 12px/13px Roboto;
+    font: normal normal 300 12px/13px 'Arial', sans-serif;
     letter-spacing: 0px;
     color: #919191;
 }
@@ -817,14 +817,14 @@ span{
 }
 .works{
     text-align: center;
-    font: normal normal bold 100px/10vh Roboto;
+    font: normal normal bold 100px/10vh 'Arial', sans-serif;
     color: #4E4C4C;
     margin: 0; 
 }
 .portfolio{
     text-align: center;
     color: #FFA200;
-    font: normal normal bold 50px/10vh Roboto;
+    font: normal normal bold 50px/10vh 'Arial', sans-serif;
     margin-top: -10vh;
   
 }
@@ -839,7 +839,7 @@ span{
     padding: 20px;
 }
 .gallery-header {
-    font: normal normal normal 22px/18px Roboto;
+    font: normal normal normal 22px/18px 'Arial', sans-serif;
     letter-spacing: 0px;
     color: #FFFFFF;
     font-weight: bold;
@@ -849,7 +849,7 @@ span{
     column-gap: 20px;
 }
 .person {
-    font: normal normal normal 22px/18px Roboto;
+    font: normal normal normal 22px/18px 'Arial', sans-serif;
     letter-spacing: 0px;
     color: #FFFFFF;
     padding: 10px;
@@ -927,7 +927,7 @@ span{
 
 .contact {
     text-align: center;
-    font: normal normal bold 100px/10vh Roboto;
+    font: normal normal bold 100px/10vh 'Arial', sans-serif;
     color: #4E4C4C;
     margin: 0; 
 }
@@ -935,7 +935,7 @@ span{
 .touch {
     text-align: center;
     color: #FFA200;
-    font: normal normal bold 50px/10vh Roboto;
+    font: normal normal bold 50px/10vh 'Arial', sans-serif;
     margin-top: -10vh;
 }
 
@@ -948,7 +948,7 @@ span{
 }
 
 .dont1 {
-    font: normal normal normal 20px/24px Roboto;
+    font: normal normal normal 20px/24px 'Arial', sans-serif;
     color: #FFFFFF;
     padding-left: 15%;
     margin-bottom: 3rem;  
@@ -956,7 +956,7 @@ span{
 
 
 .dont p {
-    font: normal normal 300 12px/16px Roboto;
+    font: normal normal 300 12px/16px 'Arial', sans-serif;
     color: #b3b0b0;
     margin-top: 1%;
 }
@@ -979,7 +979,7 @@ span{
 }
 
 .address1 span, .mail span, .call span {
-    font: normal normal normal 10px/13px Roboto;
+    font: normal normal normal 10px/13px 'Arial', sans-serif;
     color: #A7A7A7;
     
 }
@@ -1017,7 +1017,7 @@ span{
 
 .search-input::placeholder {
     padding-left: 2%;
-    font: normal normal normal 12px/14px Roboto;
+    font: normal normal normal 12px/14px 'Arial', sans-serif;
     color: #8F8F8F;
 }
 
@@ -1040,7 +1040,7 @@ span{
     margin-left: -6rem;
     width: 175px;
     height: 39px;
-    font: 12px/14px Roboto;
+    font: 12px/14px 'Arial', sans-serif;
     color: #FFFFFF;
     border-radius: 50px;
     background: none;
@@ -1121,14 +1121,14 @@ span{
 }
 .post{
     text-align: center;
-    font: normal normal bold 100px/10vh Roboto;
+    font: normal normal bold 100px/10vh 'Arial', sans-serif;
     color: #4E4C4C;
     margin: 0; 
 }
 .blog{
     text-align: center;
     color: #FFA200;
-    font: normal normal bold 60px/10vh Roboto;
+    font: normal normal bold 60px/10vh 'Arial', sans-serif;
     margin-top: -10vh;
  
 }
@@ -1172,7 +1172,7 @@ span{
     text-align: center;
     margin-top: 10%;
     margin-bottom: 3%;
-    font: normal normal 300 15px/16px Roboto;
+    font: normal normal 300 15px/16px 'Arial', sans-serif;
     color: #FFFFFF;
 }
 .scroll-to-top {
