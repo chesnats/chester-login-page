@@ -5,7 +5,7 @@
         <img src="@/assets/4c098bb079eb7146b72ab38dfffe8ed7.gif" alt="Loading..." class="logo1" />
       <div class="login-container">
         <img src="@/assets/3b1d86760d10d077f5ed7d8e4e0969aa.gif" alt="Loading..." class="logo" />
-        <h1>Welcome again! Please sign in to begin.</h1>
+        <h1>Welcome again user! Please sign in to begin.</h1>
 
         <form @submit.prevent="handleLogin">
           <Textfield
