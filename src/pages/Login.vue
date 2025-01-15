@@ -220,6 +220,7 @@ h2{
   font-size: 2rem;
   font-family: 'Arial Narrow', Arial, sans-serif;
 }
+/**/ */
 .logo1 {
   height: 100vh;
   width: calc(100% - 500px);
