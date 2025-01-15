@@ -91,6 +91,7 @@ body{
   padding: 10px 15px;
   border-radius: 20px;
   text-decoration: none; 
+  z-index: 1;
 }
 
 .custom-link:hover {
