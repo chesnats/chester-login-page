@@ -19,7 +19,7 @@
     props: {
       label: String,
       value: String,
-      type: String,
+      type:  String,
       error: Boolean,
     },
     computed: {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="theme-white">
   
    <header class="mans"> 
         <div class="mans-con">
@@ -287,19 +287,17 @@ At praesentium odit deserunt labore!</pre>
             </div>
             <input type="text" class="search-input" placeholder="YOUR SUBJECT" />
             <textarea class="search-input" placeholder="YOUR MESSAGE"></textarea>
-            <button class="send" @click="toggleModal">SEND MESSAGE</button>
-            <Modal
-            :isOpen="showModal"
-            title="SEND SUCCESSFULLY"
-            @close="toggleModal"
-            >
-            <template #footer>
-                <button class="confirm1" @click="confirmAction">Confirm</button>
-            </template>
-        </Modal>
+                <button class="send" @click="toggleModal">SEND MESSAGE</button>
+                <Modal :isOpen="showModal" title="SEND SUCCESSFULLY" @close="toggleModal">
+                <template #footer>
+                    <button class="confirm1" @click="confirmAction">Confirm</button>
+                </template>
+                </Modal>
+            </div>
         </div>
-        </div>
+        
 </section>
+
 <section id="blog">
 
 <div class="post-cons">
@@ -376,6 +374,7 @@ export default {
 </script>
 
 <style scoped>
+
 .logout-button {
   display: block;
   padding: 5px 10px;
