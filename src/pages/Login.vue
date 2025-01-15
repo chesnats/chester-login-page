@@ -30,14 +30,9 @@
               @blur="validatePassword"
               placeholder="Enter your password"
             />
-            <i
-              class="toggle-password"
-              :class="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"
-              @click="togglePasswordVisibility"
-            ></i>
+     
           </div>
           <Button :disabled="isFormInvalid" label="Login" />
-          
         </form>
 
         <!-- REGISTER FORM -->
@@ -73,6 +68,7 @@
     </audio>
   </div>
 </template>
+
 
 <script>
 import Textfield from "@/components/Textfield.vue";
@@ -111,7 +107,7 @@ export default {
       return this.passwordTouched && !this.isPasswordValid;
     },
     isEmailValid() {
-      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zAZ0-9.-]+\.[a-zA-Z]{2,}$/;
       return emailPattern.test(this.email);
     },
     isPasswordValid() {
@@ -128,9 +124,6 @@ export default {
     },
     validatePassword() {
       this.passwordTouched = true;
-    },
-    togglePasswordVisibility() {
-      this.showPassword = !this.showPassword;
     },
 
     async handleLogin() {
@@ -220,7 +213,6 @@ h2{
   font-size: 2rem;
   font-family: 'Arial Narrow', Arial, sans-serif;
 }
-/**/ */
 .logo1 {
   height: 100vh;
   width: calc(100% - 500px);
@@ -248,6 +240,7 @@ button {
   margin-top: 40px;
   font-size: 15px;
   color: #dadada;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .social-login {
   display: flex;
@@ -282,7 +275,7 @@ button {
   margin-top: 20px;
   font-size: 14px;
   color: #fff;
-  
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .switch-form a {
   color: #ff9900;
