@@ -281,7 +281,7 @@ button {
   margin-top: 20px;
   font-size: 14px;
   color: #fff;
-  
+  font-family: 'Arial Narrow', Arial, sans-serif;
 }
 .switch-form a {
   color: #ff9900;
