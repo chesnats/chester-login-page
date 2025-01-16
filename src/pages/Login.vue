@@ -42,16 +42,24 @@
 
         <!-- SOCIAL LOGIN BUTTONS (only for login view) -->
         <div class="social-login" v-if="!showRegisterForm">
-          <button @click="loginWithFacebook" class="social-btn facebook">
-            <i class="fa-brands fa-facebook"></i>
-          </button>
-          <button @click="loginWithGoogle" class="social-btn google">
-            <i class="fa-brands fa-google"></i>
-          </button>
-          <button @click="loginWithEmail" class="social-btn email">
-            <i class="fa fa-envelope"></i>
-          </button>
-        </div>
+    <button @click="loginWithFacebook" class="social-btn facebook">
+      <i class="fa-brands fa-facebook"></i>
+    </button>
+    <button @click="loginWithGoogle" class="social-btn google">
+      <i class="fa-brands fa-google"></i>
+    </button>
+    <button @click="loginWithEmail" class="social-btn email">
+      <i class="fa fa-envelope"></i>
+    </button>
+
+    <!-- Modal Component -->
+    <ModalPopup 
+      :message="modalMessage"
+      :url="modalUrl" 
+      :isVisible="isModalVisible" 
+      @close="isModalVisible = false" 
+    />
+  </div>
 
         <!-- SWITCH BETWEEN LOGIN AND REGISTER -->
         <p class="switch-form">
@@ -75,6 +83,7 @@ import Textfield from "@/components/Textfield.vue";
 import Button from "@/components/Button.vue";
 import Loading from "@/components/Loading.vue";
 import RegisterUser from "@/components/RegisterUser.vue";
+import ModalPopup from "@/components/ModalPopup.vue";
 
 export default {
   name: "LoginPage",
@@ -83,6 +92,8 @@ export default {
     Button,
     Loading,
     RegisterUser,
+    ModalPopup,
+
   },
 
   data() {
@@ -96,6 +107,8 @@ export default {
       loading: false,
       showPassword: false,
       showRegisterForm: false, 
+      isModalVisible: false,
+      modalUrl: ''
     };
   },
 
@@ -139,13 +152,19 @@ export default {
     },
 
     loginWithFacebook() {
-      alert("Logging in with Facebook...");
+      this.modalMessage = "Click the button below to proceed with Facebook Login"
+      this.modalUrl = "https://www.facebook.com/login";
+      this.isModalVisible = true;
     },
     loginWithGoogle() {
-      alert("Logging in with Google...");
+      this.modalMessage = "Click the button below to proceed with Google Login"
+      this.modalUrl = "https://accounts.google.com/signin";
+      this.isModalVisible = true;
     },
     loginWithEmail() {
-      alert("Logging in with Email...");
+      this.modalMessage = "Click the button below to proceed with Email Login"
+      this.modalUrl = "https://mail.google.com/";
+      this.isModalVisible = true;
     },
 
     startMusic() {
@@ -169,6 +188,16 @@ export default {
   margin: 0;
   padding: 0;
 }
+.social-btn {
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 5px;
+}
+.facebook { background-color: #3b5998; color: white; }
+.google { background-color: #db4437; color: white; }
+.email { background-color: #f4b400; color: white; }
+
 .password-wrapper {
   position: relative;
 }

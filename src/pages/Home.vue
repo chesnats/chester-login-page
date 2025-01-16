@@ -287,12 +287,8 @@ At praesentium odit deserunt labore!</pre>
             </div>
             <input type="text" class="search-input" placeholder="YOUR SUBJECT" />
             <textarea class="search-input" placeholder="YOUR MESSAGE"></textarea>
-                <button class="send" @click="toggleModal">SEND MESSAGE</button>
-                <Modal :isOpen="showModal" title="SEND SUCCESSFULLY" @close="toggleModal">
-                <template #footer>
-                    <button class="confirm1" @click="confirmAction">Confirm</button>
-                </template>
-                </Modal>
+                <button class="send">SEND MESSAGE</button>
+            
             </div>
         </div>
         
@@ -333,29 +329,22 @@ At praesentium odit deserunt labore!</pre>
 
 <script>
 import Loading from "@/components/Loading.vue"; 
-import Modal   from '@/components/Modal.vue';
+
 export default {
   name: "HomePage",
   components: {
     Loading,  
-    Modal,
-  
+    
   },
   data() {
     return {
       loading:   false, 
-      showModal: false,
+
     
     };
   },
   methods: {
-    toggleModal() {
-      this.showModal = !this.showModal;
-    },
-    confirmAction() {
-      alert('Action confirmed!');
-      this.showModal = false;
-    },
+  
     async logout() {
         
       this.loading = true;

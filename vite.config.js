@@ -10,3 +10,9 @@ export default defineConfig({
     base: '/chesnats/',
     plugins: [inkline(inklineConfig), vue()]
 });
+
+module.export = {
+    configureWebpack: {
+        devtool: 'source-map'
+    }
+}
