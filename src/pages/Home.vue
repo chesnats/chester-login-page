@@ -287,8 +287,12 @@ At praesentium odit deserunt labore!</pre>
             </div>
             <input type="text" class="search-input" placeholder="YOUR SUBJECT" />
             <textarea class="search-input" placeholder="YOUR MESSAGE"></textarea>
-                <button class="send">SEND MESSAGE</button>
-            
+                <button class="send" @click="toggleModal">SEND MESSAGE</button>
+                <Modal :isOpen="showModal" title="SEND SUCCESSFULLY" @close="toggleModal">
+                <template #footer>
+                    <button class="confirm1" @click="confirmAction">Confirm</button>
+                </template>
+                </Modal>
             </div>
         </div>
         
@@ -329,37 +333,54 @@ At praesentium odit deserunt labore!</pre>
 
 <script>
 import Loading from "@/components/Loading.vue"; 
-
+import Modal   from '@/components/Modal.vue';
+import axios from 'axios';
 export default {
   name: "HomePage",
   components: {
     Loading,  
-    
+    Modal,
+  
   },
   data() {
     return {
       loading:   false, 
-
-    
+      showModal: false,
+      stage_link: 'https://aapistage.newalchemysolutions.com',
     };
   },
   methods: {
-  
-    async logout() {
+    toggleModal() {
+      this.showModal = !this.showModal;
+    },
+    confirmAction() {
+      alert('Action confirmed!');
+      this.showModal = false;
+    },
+logout() {
         
       this.loading = true;
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-   
-      localStorage.removeItem('authToken');
-      sessionStorage.removeItem('authToken');
-      localStorage.removeItem('user'); 
+      let headers = {
+        "Content-Type": "application/json",
+        "Gui" : "Verification"
+      };
+
+    axios.delete(`${this.stage_link}/logout`, { headers })
+        .then(response => {
+        console.log(response);
+        if (response.status === 200) {
+            localStorage.setItem('logout_time', new Date().toISOString()); 
+            localStorage.setItem('logout', 'User successfully logged out.');
 
       this.$router.push({ name: 'Login' });
       this.loading = false;
-    },
-  },
+      }
+     })
+    }
+  }
 };
+
 </script>
 
 <style scoped>

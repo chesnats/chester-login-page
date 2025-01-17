@@ -43,22 +43,28 @@
       </div>
 
       <!-- Register Button -->
-      <Button :disabled="isFormInvalid" label="Register" />
+      <Button :disabled="isFormInvalid" label="Register" @click="handleSubmit" />
     </form>
+
+    <!-- Modal Component -->
+    <div v-if="isModalVisible" class="modal-overlay">
+      <div class="modal-content">
+        <p>User Registered Successfully!</p>
+        <button @click="closeModal">OK</button>
+      </div>
+    </div>
   </div>
 </template>
 
 
 <script>
-import { reactive, computed } from 'vue';
+import { reactive, ref, computed } from 'vue';
 import Button from "@/components/Button.vue";  
 import * as yup from 'yup';  
 
 export default {
   name: 'RegisterUser',
-  components: {
-    Button,
-  },
+  components: { Button },
   setup() {
     const form = reactive({
       email: '',
@@ -67,25 +73,17 @@ export default {
     });
 
     const errors = reactive({});
-
     const showPassword = reactive({
       password: false,
       confirmPassword: false,
     });
 
+    const isModalVisible = ref(false); // FIXED: Using ref for modal visibility
+
     const schema = yup.object().shape({
-      email: yup
-        .string()
-        .required('Email is required')
-        .email('Enter a valid email'),
-      password: yup
-        .string()
-        .required('Password is required')
-        .min(8, 'Password must be at least 8 characters long'),
-      confirmPassword: yup
-        .string()
-        .oneOf([yup.ref('password')], 'Passwords must match')
-        .required('Confirm password is required'),
+      email: yup.string().required('Email is required').email('Enter a valid email'),
+      password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters long'),
+      confirmPassword: yup.string().oneOf([yup.ref('password')], 'Passwords must match').required('Confirm password is required'),
     });
 
     const isFormInvalid = computed(() => {
@@ -102,13 +100,17 @@ export default {
     const handleSubmit = async () => {
       try {
         await schema.validate(form, { abortEarly: false });
-        alert('User Registered Successfully!');
+        isModalVisible.value = true; // FIXED: Using ref correctly for reactivity
       } catch (err) {
         Object.keys(errors).forEach((key) => (errors[key] = ''));
         err.inner.forEach((error) => {
           errors[error.path] = error.message;
         });
       }
+    };
+
+    const closeModal = () => {
+      isModalVisible.value = false;
     };
 
     const togglePasswordVisibility = (field) => {
@@ -122,11 +124,12 @@ export default {
       isFormInvalid,
       showPassword,
       togglePasswordVisibility,
+      isModalVisible,
+      closeModal
     };
   },
 };
 </script>
-
 
 
 <style scoped>
@@ -187,7 +190,34 @@ button:hover {
   background: #9b5d00;
 }
 p {
-  color: red;
-  font-size: 0.9rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+/* ✅ Modal Overlay Styling Fixed */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background: rgb(250, 162, 103);
+}
+.modal-content button:hover {
+  opacity: 0.9;
 }
 </style>

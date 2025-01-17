@@ -44,8 +44,8 @@ export default {
   },
   computed: {
     errorMessage() {
-      if (this.type === "email") {
-        return "Email is not valid";
+      if (this.type === "username") {
+        return "Username is not valid";
       }
       if (this.type === "password" && this.value.length < 8) {
         return "Password should at least 8 characters long";

@@ -64,6 +64,7 @@ button {
   border: none;
   border-radius: 5px;
   font-size: 16px;
+  color: white;
   background: rgb(250, 162, 103);
 }
 

@@ -6,34 +6,28 @@
       
       <div class="login-container">
         <img src="@/assets/3b1d86760d10d077f5ed7d8e4e0969aa.gif" alt="Loading..." class="logo" />
-        
-        <!-- Conditional Rendering for Login or Register -->
         <h1>{{ showRegisterForm ? "Create a New Account" : "Welcome again! Please sign in to begin." }}</h1>
-
         <h2>{{ showRegisterForm ? "Register" : "Login" }}</h2>
-        <!-- LOGIN FORM (only shows when not registering) -->
-        <form v-if="!showRegisterForm" @submit.prevent="handleLogin">
-          <Textfield
-            v-model="email"
-            label="Email"
-            type="email"
-            :error="emailError"
-            @blur="validateEmail"
-            placeholder="Enter your email"
-          />
-          <div class="password-wrapper">
+
+        <template v-if="!showRegisterForm">
+          <form @submit.prevent="login">
             <Textfield
+              v-model="username"
+              label="Username"
+              type="username"
+              placeholder="Enter your username"
+            />
+            <div class="password-wrapper">
+              <Textfield
               v-model="password"
               label="Password"
               :type="showPassword ? 'text' : 'password'"
-              :error="passwordError"
-              @blur="validatePassword"
               placeholder="Enter your password"
-            />
-     
-          </div>
-          <Button :disabled="isFormInvalid" label="Login" />
-        </form>
+              />
+            </div>
+            <Button label="Login" :disabled="!username || !password" @click="login()"/>
+          </form>
+        </template>
 
         <!-- REGISTER FORM -->
         <RegisterUser v-else />
@@ -42,32 +36,32 @@
 
         <!-- SOCIAL LOGIN BUTTONS (only for login view) -->
         <div class="social-login" v-if="!showRegisterForm">
-    <button @click="loginWithFacebook" class="social-btn facebook">
-      <i class="fa-brands fa-facebook"></i>
-    </button>
-    <button @click="loginWithGoogle" class="social-btn google">
-      <i class="fa-brands fa-google"></i>
-    </button>
-    <button @click="loginWithEmail" class="social-btn email">
-      <i class="fa fa-envelope"></i>
-    </button>
+          <button @click="loginWithFacebook" class="social-btn facebook">
+            <i class="fa-brands fa-facebook"></i>
+          </button>
+          <button @click="loginWithGoogle" class="social-btn google">
+            <i class="fa-brands fa-google"></i>
+          </button>
+          <button @click="loginWithEmail" class="social-btn email">
+            <i class="fa fa-envelope"></i>
+          </button>
 
-    <!-- Modal Component -->
-    <ModalPopup 
-      :message="modalMessage"
-      :url="modalUrl" 
-      :isVisible="isModalVisible" 
-      @close="isModalVisible = false" 
-    />
-  </div>
+          <!-- Modal Component -->
+          <ModalPopup 
+            :message="modalMessage"
+            :url="modalUrl" 
+            :isVisible="isModalVisible" 
+            @close="isModalVisible = false" 
+          />
+        </div>
 
         <!-- SWITCH BETWEEN LOGIN AND REGISTER -->
-        <p class="switch-form">
-          {{ showRegisterForm ? "Already have an account?" : "Don't have an account?" }}
-          <a href="#" @click="toggleRegisterForm">
-            {{ showRegisterForm ? "Login here" : "Register here" }}
-          </a>
-        </p>
+          <p class="switch-form">
+            {{ showRegisterForm ? "Already have an account?" : "Don't have an account?" }}
+            <a href="#" @click="toggleRegisterForm">
+              {{ showRegisterForm ? "Login here" : "Register here" }}
+            </a>
+          </p>
       </div>
     </div>
 
@@ -84,6 +78,7 @@ import Button from "@/components/Button.vue";
 import Loading from "@/components/Loading.vue";
 import RegisterUser from "@/components/RegisterUser.vue";
 import ModalPopup from "@/components/ModalPopup.vue";
+import axios from 'axios';
 
 export default {
   name: "LoginPage",
@@ -98,58 +93,73 @@ export default {
 
   data() {
     return {
-      correctEmail: "klaychestermans425@gmail.com",
-      correctPassword: "mans0935217",
-      email: "",
+      username: "",
       password: "",
-      emailTouched: false,
+      usernameTouched: false,
       passwordTouched: false,
       loading: false,
       showPassword: false,
       showRegisterForm: false, 
       isModalVisible: false,
-      modalUrl: ''
+      modalUrl: '',
+      stage_link: 'https://aapistage.newalchemysolutions.com',
     };
   },
 
-  computed: {
-    emailError() {
-      return this.emailTouched && !this.isEmailValid;
-    },
-    passwordError() {
-      return this.passwordTouched && !this.isPasswordValid;
-    },
-    isEmailValid() {
-      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zAZ0-9.-]+\.[a-zA-Z]{2,}$/;
-      return emailPattern.test(this.email);
-    },
-    isPasswordValid() {
-      return this.password.length >= 8;
-    },
-    isFormInvalid() {
-      return !(this.isEmailValid && this.isPasswordValid);
-    },
-  },
 
   methods: {
-    validateEmail() {
-      this.emailTouched = true;
-    },
-    validatePassword() {
-      this.passwordTouched = true;
-    },
+    login(){
 
-    async handleLogin() {
-      this.loading = true;
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      if (this.loading) return;
 
-      if (this.email === this.correctEmail && this.password === this.correctPassword) {
-        this.$router.push("/home");
-      } else {
-        alert("Invalid email or password!");
+      let payload = {
+        user_id: this.username,
+        password: this.password
       }
-      this.loading = false;
-    },
+      let headers = {
+        "Content-Type": "application/json",
+        "Gui" : "Verification"
+      }
+      this.loading = true;
+      
+      axios.post(`${this.stage_link}/login`, payload, headers).then(
+        response => {
+          console.log(response)
+          if(response.status == 200) {
+            localStorage.setItem('login_time', new Date().toISOString()); 
+            localStorage.setItem('login_user', this.username); 
+            localStorage.setItem('login_message', 'User successfully logged in.');
+            if (this.$route.path !== "/home") {
+                this.$router.push("/home");
+             }
+          }
+      })
+        .catch(error => {
+        let err = {error}
+        alert("Invalid username or password!");
+        console.log(err.error.response.data.meta.message);
+        this.loading = false;
+      })
+    },  
+    
+    // validateEmail() {
+    //   this.emailTouched = true;
+    // },
+    // validatePassword() {
+    //   this.passwordTouched = true;
+    // },
+
+    // async handleLogin() {
+    //   this.loading = true;
+    //   await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    //   if (this.email === this.correctEmail && this.password === this.correctPassword) {
+    //     this.$router.push("/home");
+    //   } else {
+    //     alert("Invalid email or password!");
+    //   }
+    //   this.loading = false;
+    // },
 
     loginWithFacebook() {
       this.modalMessage = "Click the button below to proceed with Facebook Login"
@@ -173,7 +183,6 @@ export default {
       music.play();
     },
 
-    // Toggle between Login and Register Forms
     toggleRegisterForm() {
       this.showRegisterForm = !this.showRegisterForm;
     },
