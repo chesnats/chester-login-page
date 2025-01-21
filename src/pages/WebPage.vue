@@ -85,13 +85,15 @@ body{
     background: black;
 }
 .custom-link {
+  margin-top: 10px;
   color: #FFA200; 
   text-decoration: none; 
-  background-color: rgb(34, 34, 34);
-  padding: 10px 15px;
+  background-color: rgb(63, 63, 63);
+  padding: 15px 25px;
+  font-size: 20px;
   border-radius: 20px;
   text-decoration: none; 
-  z-index: 1;
+  cursor: pointer; 
 }
 
 .custom-link:hover {
