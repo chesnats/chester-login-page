@@ -335,6 +335,7 @@ At praesentium odit deserunt labore!</pre>
 import Loading from "@/components/Loading.vue"; 
 import Modal   from '@/components/Modal.vue';
 import axios from 'axios';
+
 export default {
   name: "HomePage",
   components: {
@@ -357,7 +358,7 @@ export default {
       alert('Action confirmed!');
       this.showModal = false;
     },
-logout() {
+    logout() {
         
       this.loading = true;
 
@@ -366,17 +367,19 @@ logout() {
         "Gui" : "Verification"
       };
 
-    axios.delete(`${this.stage_link}/logout`, { headers })
+     axios.delete(`${this.stage_link}/logout`, { headers })
         .then(response => {
         console.log(response);
         if (response.status === 200) {
             localStorage.setItem('logout_time', new Date().toISOString()); 
             localStorage.setItem('logout', 'User successfully logged out.');
+            localStorage.clear();
 
       this.$router.push({ name: 'Login' });
       this.loading = false;
       }
      })
+     
     }
   }
 };

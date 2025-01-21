@@ -22,6 +22,7 @@
         :class="{ 'input-error': error }"
         @input="$emit('input', $event.target.value)"
         @blur="$emit('blur')"
+        
       />
     </div>
     <span v-if="error" class="error-message"> {{ errorMessage }}</span>

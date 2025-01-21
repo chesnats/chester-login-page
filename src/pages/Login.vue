@@ -71,7 +71,6 @@
   </div>
 </template>
 
-
 <script>
 import Textfield from "@/components/Textfield.vue";
 import Button from "@/components/Button.vue";
@@ -95,8 +94,6 @@ export default {
     return {
       username: "",
       password: "",
-      usernameTouched: false,
-      passwordTouched: false,
       loading: false,
       showPassword: false,
       showRegisterForm: false, 
@@ -112,15 +109,15 @@ export default {
 
       if (this.loading) return;
 
-      let payload = {
-        user_id: this.username,
-        password: this.password
-      }
-      let headers = {
-        "Content-Type": "application/json",
-        "Gui" : "Verification"
-      }
-      this.loading = true;
+        let payload = {
+          user_id: this.username,
+          password: this.password
+        }
+        let headers = {
+          "Content-Type": "application/json",
+          "Gui" : "Verification"
+        }
+        this.loading = true;
       
       axios.post(`${this.stage_link}/login`, payload, headers).then(
         response => {
@@ -129,38 +126,29 @@ export default {
             localStorage.setItem('login_time', new Date().toISOString()); 
             localStorage.setItem('login_user', this.username); 
             localStorage.setItem('login_message', 'User successfully logged in.');
-            if (this.$route.path !== "/home") {
-                this.$router.push("/home");
-             }
+            localStorage.setItem('login_data', JSON.stringify(response?.data?.data));
+
+            const isFirstLogin = localStorage.getItem('firstlogin') === null;
+
+          if (isFirstLogin) {
+            localStorage.setItem('firstLogin', 'false');
+            
+          } else {
+          if (this.$route.path !== "/home") {
+              this.$router.push("/home");
           }
-      })
+        }
+      }
+    })
         .catch(error => {
-        let err = {error}
-        alert("Invalid username or password!");
-        console.log(err.error.response.data.meta.message);
-        this.loading = false;
+          let err = {error}
+          console.log(err)
+          alert("Invalid username or password!");
+          console.log(err.error.response?.data?.meta?.message);
+          this.loading = false;
       })
     },  
     
-    // validateEmail() {
-    //   this.emailTouched = true;
-    // },
-    // validatePassword() {
-    //   this.passwordTouched = true;
-    // },
-
-    // async handleLogin() {
-    //   this.loading = true;
-    //   await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    //   if (this.email === this.correctEmail && this.password === this.correctPassword) {
-    //     this.$router.push("/home");
-    //   } else {
-    //     alert("Invalid email or password!");
-    //   }
-    //   this.loading = false;
-    // },
-
     loginWithFacebook() {
       this.modalMessage = "Click the button below to proceed with Facebook Login"
       this.modalUrl = "https://www.facebook.com/login";
