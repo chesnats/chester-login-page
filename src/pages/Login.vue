@@ -128,17 +128,11 @@ export default {
             localStorage.setItem('login_message', 'User successfully logged in.');
             localStorage.setItem('login_data', JSON.stringify(response?.data?.data));
 
-            const isFirstLogin = localStorage.getItem('firstlogin') === null;
-
-          if (isFirstLogin) {
-            localStorage.setItem('firstLogin', 'false');
-            
-          } else {
           if (this.$route.path !== "/home") {
               this.$router.push("/home");
           }
         }
-      }
+      
     })
         .catch(error => {
           let err = {error}
