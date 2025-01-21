@@ -127,12 +127,11 @@ export default {
             localStorage.setItem('login_user', this.username); 
             localStorage.setItem('login_message', 'User successfully logged in.');
             localStorage.setItem('login_data', JSON.stringify(response?.data?.data));
-
+    
           if (this.$route.path !== "/home") {
               this.$router.push("/home");
           }
         }
-      
     })
         .catch(error => {
           let err = {error}
