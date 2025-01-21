@@ -132,7 +132,7 @@ export default {
               this.$router.push("/home");
           }
         }
-    })
+      })
         .catch(error => {
           let err = {error}
           console.log(err)
