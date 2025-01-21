@@ -97,16 +97,22 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   const login_data = localStorage.getItem('login_data');
-  const isAuthenticated = login_data ? true : false;
-  // const isAuthenticated = login_data?.id ?? false;
+  const isAuthenticated = !!login_data; 
 
-  if (to.name !== 'Login' && !isAuthenticated) {
-    next({ name: 'Login' });
-
-  } else if (to.name === 'Login' && isAuthenticated) {
+  // Redirect to Login if unauthenticated and not on Login page
+  if (!isAuthenticated && to.name !== 'Login') {
+    if (to.name !== 'ErrorPage') {
+      next({ name: 'Login' });
+    } else {
+      next();
+    }
+  }
+  // Redirect authenticated users away from Login
+  else if (isAuthenticated && to.name === 'Login') {
     next({ name: 'Home' });
-
-  } else {
+  }
+  // Allow navigation for all other cases
+  else {
     next();
   }
 });

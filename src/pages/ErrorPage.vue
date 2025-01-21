@@ -4,7 +4,8 @@
     <h1>SORRY!</h1>
     <P>The Page You're Looking For Was Not Found</P>
   <div>
-    <button @click="home" to="/home">⬅ Back to Login Page</button>
+    <button @click="goBackToLogin">⬅ Back to Login Page</button>
+
     <Loading v-if="loading" />
   </div>
   </div>
@@ -23,18 +24,26 @@ export default {
     };
   },
   methods: {
-    async home() {
-        
-      this.loading = true;
+    async goBackToLogin() {
+      this.loading = true; 
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
-   
-      localStorage.removeItem('authToken');
-      sessionStorage.removeItem('authToken');
-      localStorage.removeItem('user'); 
 
-      this.$router.push({ name: 'Login' });
-      this.loading = false;
+      // Clear authentication data if applicable
+      localStorage.removeItem("login_data");
+      sessionStorage.removeItem("authToken");
+      localStorage.removeItem("user");
+
+      // Navigate to the Login page
+      this.$router
+        .push({ name: "Login" })
+        .catch(() => {
+
+      // Suppress potential duplicate navigation errors
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
 };
