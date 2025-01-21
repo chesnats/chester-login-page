@@ -1,11 +1,11 @@
 <template>
   <div class="register-form">
     <form @submit.prevent="handleSubmit">
-      <!-- Email Field -->
+      <!-- Username Field -->
       <div>
-        <label for="email">Email</label>
-        <input v-model="form.email" type="email" id="email" placeholder="Enter your Email" />
-        <p v-if="errors.email" class="error-message">{{ errors.email }}</p>
+        <label for="username">Username</label>
+        <input v-model="form.username" type="username" id="username" placeholder="Enter your username" />
+        <p v-if="errors.username" class="error-message">{{ errors.username }}</p>
       </div>
 
       <!-- Password Field -->
@@ -67,7 +67,7 @@ export default {
   components: { Button },
   setup() {
     const form = reactive({
-      email: '',
+      username: '',
       password: '',
       confirmPassword: '',
     });
@@ -81,17 +81,15 @@ export default {
     const isModalVisible = ref(false); // FIXED: Using ref for modal visibility
 
     const schema = yup.object().shape({
-      email: yup.string().required('Email is required').email('Enter a valid email'),
-      password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters long'),
       confirmPassword: yup.string().oneOf([yup.ref('password')], 'Passwords must match').required('Confirm password is required'),
     });
 
     const isFormInvalid = computed(() => {
       return (
-        !form.email ||
+        !form.username ||
         !form.password ||
         form.password !== form.confirmPassword ||
-        errors.email ||
+        errors.username ||
         errors.password ||
         errors.confirmPassword
       );
