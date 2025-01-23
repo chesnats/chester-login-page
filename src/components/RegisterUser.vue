@@ -99,6 +99,7 @@ export default {
       try {
         await schema.validate(form, { abortEarly: false });
         isModalVisible.value = true; // FIXED: Using ref correctly for reactivity
+        
       } catch (err) {
         Object.keys(errors).forEach((key) => (errors[key] = ''));
         err.inner.forEach((error) => {

@@ -1,32 +1,47 @@
 <template>
   <div class="theme-white">
   
-   <header class="mans"> 
-        <div class="mans-con">
-            <div class="mans-navbar">
-                <h1 style="cursor: pointer;">MANS</h1>
-                <div class="nav-links">
-                    <div class="home">
-                        <a class='mans-link' href='#home'>HOME</a>
-                    </div>
-                    <div class="home">
-                        <a class='mans-link' href='#about'>ABOUT ME</a>
-                    </div>
-                    <div class="home">
-                        <a class='mans-link' href='#portfolio'>MY PORTFOLIO</a>
-                    </div>
-                    <div class="home">
-                        <a class='mans-link' href='#touch'>GET IN TOUCH</a>
-                    </div>
-                    <div class="home">
-                        <a class='mans-link' href='#blog'>MY BLOG</a>
-                    </div>
-                    <button @click="logout" class="logout-button">Logout</button>
-                    <Loading v-if="loading" />
-                </div>
+    <header class="mans"> 
+    <div class="mans-con">
+        <div class="mans-navbar">
+            <a href="#home" style="cursor: pointer; text-decoration: none;" >
+            <h1>MANS</h1>
+          </a>
+        <div class="nav-links">
+            <div class="home">
+            <a class='mans-link' href='#home'>HOME</a>
             </div>
+            <div class="home">
+            <a class='mans-link' href='#about'>ABOUT ME</a>
+            </div>
+            <div class="home">
+            <a class='mans-link' href='#portfolio'>MY PORTFOLIO</a>
+            </div>
+            <div class="home">
+            <a class='mans-link' href='#touch'>GET IN TOUCH</a>
+            </div>
+            <div class="home">
+            <a class='mans-link' href='#blog'>MY BLOG</a>
+            </div>
+            
+            <!-- Dropdown Menu -->
+        <div class="dropdown">
+            <button class="dropdown-button">
+              <span class="user-icon"><i class="fa fa-user"></i></span>
+                <span>Chester Manolo</span>
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a @click.prevent="navigateToProfile">Profile</a>
+                <a @click="logout">Logout</a>
+            </div>
+            <Loading v-if="loading" />
+         </div>
         </div>
+    </div>
+    </div>
     </header>
+
     <section id="home">
     <div class="header1">
         <div class="text-container">
@@ -62,19 +77,20 @@ interfaces that help bring digital products to life.</pre>
 <div class="personal">Personal Info</div>
 <div class="about-con">
     
-    <pre class="name">First Name: <span>Chester</span>                                 Last Name: <span>Manolo</span> 
+    <pre class="name">First Name: <span>Chester</span>                                Last Name: <span>Manolo</span> 
 
-Age: <span>23 Years</span>                                            Nationality: <span>Filipino</span> 
+Age: <span>23 Years</span>                                          Nationality: <span>Filipino</span> 
 
-Freelance: <span>Available</span>                                 Address: <span>Alegria, Cebu</span> 
+Freelance: <span>Available</span>                                Address: <span>Alegria, Cebu</span> 
 
 Phone: <span>09491735243</span>                              Email: <span>klaychestermans425@gmail.com</span> 
 
 Skype: <span>Chester Manolo - IT Dev</span>             Languages: <span>Bisaya, Tagalog, English</span></pre>
-                                    <div>
-                                <div>
-                            <div>
-                        <div>
+
+            <div>
+        <div>
+    <div>
+<div>
                     <div class="years-container">
                         <div class="years">
                             <h1>5&#8314;</h1>
@@ -358,6 +374,15 @@ export default {
       alert('Action confirmed!');
       this.showModal = false;
     },
+    async navigateToProfile() {
+      this.loading = true;
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 500)); // Simulated delay
+        this.$router.push({ name: "UserProfile" });
+      } finally {
+        this.loading = false;
+      }
+    },
     logout() {
         
       this.loading = true;
@@ -371,8 +396,8 @@ export default {
         .then(response => {
         console.log(response);
         if (response.status === 200) {
-            localStorage.setItem('logout_time', new Date().toISOString()); 
-            localStorage.setItem('logout', 'User successfully logged out.');
+            // localStorage.setItem('logout_time', new Date().toISOString()); 
+            // localStorage.setItem('logout', 'User successfully logged out.');
             localStorage.clear();
 
       this.$router.push({ name: 'Login' });
@@ -387,20 +412,73 @@ export default {
 </script>
 
 <style scoped>
-
-.logout-button {
-  display: block;
+.user-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;  
+  height: 30px;
+  border-radius: 50%; 
+  background-color: #464543;
+  color: white; 
+  font-size: 18px; 
+  margin-right: 8px; 
+}
+.dropdown{
+  position: relative;
+  top: -8px;
+}
+.dropdown-button {
+  display: flex;
+  align-items: center;
   padding: 5px 10px;
   font-size: 12px;
   background-color: #ff9900;
   color: white;
+  height: 35px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  gap: 5px;
+  margin-top: 8px;
 }
-.logout-button:hover {
+.dropdown-button:hover {
   background-color: #ff8000;
 }
+
+.dropdown-content {
+  display: none;
+  position: relative;
+  margin-top: 5px;
+  background-color: #ffffff;
+  min-width: 150px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 10px 15px;
+  font-size: 12px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.2s;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.dropdown-content a:hover {
+   background-color: #ff8000;
+   border-radius: 5px;
+   color: white;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
 .confirm1{
    padding: 0.75rem 1rem;
    border-radius: 10px;
@@ -438,6 +516,7 @@ export default {
     font: normal normal bold 30px/29px 'Arial', sans-serif;
     color: #FFA200;
     margin: 0;
+    margin-left: -10px;
 }
 .nav-links {
     display: flex;
@@ -454,7 +533,7 @@ export default {
 .home::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: 10px;
     left: 0;
     width: 0;
     height: 3px;

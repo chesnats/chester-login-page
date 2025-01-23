@@ -9,7 +9,7 @@ import BirthdayPage from '@/pages/BirthdayPage.vue';
 import EmpathyPage from '@/pages/EmpathyPage.vue';
 import HarleyPage from '@/pages/HarleyPage.vue';
 import WebPage from '@/pages/WebPage.vue';
-
+import UserProfile from '@/pages/UserProfile.vue';
 
 Vue.use(VueRouter);
 
@@ -34,6 +34,14 @@ const router = new VueRouter({
       component: Home,
       meta: {
         title: 'Home | Sample App'
+      }
+    },
+    { 
+      path: '/profile',
+      name: 'UserProfile',
+      component: UserProfile,
+      meta: {
+        title: 'User Profile | Sample App',
       }
     },
     {

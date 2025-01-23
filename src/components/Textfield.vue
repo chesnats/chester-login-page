@@ -22,7 +22,6 @@
         :class="{ 'input-error': error }"
         @input="$emit('input', $event.target.value)"
         @blur="$emit('blur')"
-        
       />
     </div>
     <span v-if="error" class="error-message"> {{ errorMessage }}</span>
@@ -37,10 +36,11 @@ export default {
     value: String,
     type: String,
     error: Boolean,
+    inputClass: String,
   },
   data() {
     return {
-      showPassword: false, // New data property to toggle password visibility
+      showPassword: false,
     };
   },
   computed: {
@@ -71,6 +71,7 @@ export default {
   width: 400px;
   height: auto;
   padding: 10px;
+  padding-right: 35px; /* Add space for the eye icon */
   margin-top: 10px;
   border: 1px solid #000000;
   border-radius: 5px;
@@ -94,15 +95,18 @@ label {
 
 .password-wrapper {
   position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
 .toggle-password {
   position: absolute;
-  right: 15px;
+  right: 15px; /* Adjust for padding alignment */
   top: 60%;
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 16px;
   color: #000000;
+  z-index: 1;
 }
 </style>
