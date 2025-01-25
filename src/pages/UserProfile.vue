@@ -6,7 +6,7 @@
             <h1>MANS</h1>
         </a>
           <Loading v-if="loading" />
-        <div class="nav-links">
+        <div class="nav-links" style="cursor: pointer;">
             <a @click.prevent="navigateToHomePage"  class="mans-link">HOME</a>
             <a @click.prevent="navigateToHomePage" class="mans-link">ABOUT ME</a>
             <a @click.prevent="navigateToHomePage"  class="mans-link">MY PORTFOLIO</a>
@@ -20,8 +20,8 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a>Profile</a>
-                <a @click="logout">Logout</a>
+                <a style="cursor: pointer;">Profile</a>
+                <a @click="logout" style="cursor: pointer;">Logout</a>
             </div>
           </div>
         </div>
@@ -34,11 +34,38 @@
           <button  @click="enableEdit">Edit Profile</button>
         </div>
         <div style="display: flex; gap: 20px;">
-            <span class="profile-icon"><i class="fa fa-user"></i></span>
+          <span 
+              class="profile-icon" 
+              :class="{ 'hover-edit': isEditing }" 
+              @click="triggerFileInput"
+            >
+              <input 
+                class="fa fa-user file-input" 
+                @click="enableEdit" 
+                @change="handleProfileIconChange" 
+                type="file" 
+                ref="fileInput" 
+              />
+              <img v-if="user.profileIcon" :src="user.profileIcon" alt="Profile Icon" class="profile-image" />
+              <i v-else class="fa fa-user"></i>
+            </span>
+
             <span class="name"> Chester Manolo </span>
         </div>
           <div class="user-avatar" >
             <div class="profile-info">
+              <div class="field">
+                  <label>First Name</label>
+                  <div v-if="!isEditing" class="field-box">{{ user.first_name }}</div>
+                  <Textfield v-else v-model="editableUser.first_name" placeholder="Update your first name"
+                   />
+                </div>
+              <div class="field">
+                  <label>Last Name</label>
+                  <div v-if="!isEditing" class="field-box">{{ user.last_name }}</div>
+                  <Textfield v-else v-model="editableUser.last_name" placeholder="Update your last name"
+                   />
+                </div>
               <div class="field">
                   <label>Username</label>
                   <div v-if="!isEditing" class="field-box">{{ user.username }}</div>
@@ -48,6 +75,12 @@
                     placeholder="Update your username"
                   />
               </div>
+              <div class="field">
+                  <label>Job Position</label>
+                  <div v-if="!isEditing" class="field-box">{{ user.job_position }}</div>
+                  <Textfield v-else v-model="editableUser.job_position" placeholder="Update your job position" 
+                  />
+                </div>
               <div class="field">
                   <label>Address</label>
                   <div v-if="!isEditing" class="field-box">{{ user.address }}</div>
@@ -75,6 +108,12 @@
                     placeholder="Update your secondary email"  
                   />
               </div>
+              <div class="field">
+                  <label>Department</label>
+                  <div v-if="!isEditing" class="field-box">{{ user.department }}</div>
+                  <Textfield v-else v-model="editableUser.department" placeholder="Update your department" 
+                  />
+                </div>
               <div v-if="isEditing" class="edit-actions" style="margin-top: -1rem;">
                   <button @click="saveProfile" class="save-btn">Save Changes</button>
                   <button @click="cancelEdit" class="cancel-btn">Cancel</button>
@@ -153,13 +192,27 @@ export default {
       loading: false, 
       stage_link: 'https://aapistage.newalchemysolutions.com',
       user: {
+        first_name: "Chester",
+        last_name: "Manolo",
         username: localStorage.getItem("login_user") || "Guest",
+        job_position: "Front End Developer",
         email: "user@example.com",
         secondaryemail: "user1@example.com",
-        address: "Alegria, Cebu"
+        department: "Developer",
+        address: "Alegria, Cebu",
+         profileIcon: null
       },
       isEditing: false,
-      editableUser: { username: "", email: "", secondaryemail: "" },
+      editableUser: {
+        first_name: "",
+        last_name: "",
+        username: "",
+        job_position: "",
+        email: "",
+        secondaryemail: "",
+        department: "",
+      },
+
       password: {
         oldPassword: "",
         newPassword: "",
@@ -169,7 +222,12 @@ export default {
     };
   },
   methods: {
-    
+    handleProfileIconChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.user.profileIcon = URL.createObjectURL(file);
+      }
+    },
     async navigateToHomePage() {
       this.loading = true;
       try {
@@ -209,10 +267,45 @@ export default {
       this.isEditing = false;
       this.showChangePassword = true;
     },
+    triggerFileInput() {
+      if (this.isEditing) {
+        this.$refs.fileInput.click(); // Open file selector
+      }
+    },
     saveProfile() {
-      this.user = { ...this.editableUser };
-      alert("Profile saved successfully!");
-      this.isEditing = false;
+      const payload = {
+        first_name: this.editableUser.first_name || this.user.first_name,
+        last_name: this.editableUser.last_name || this.user.last_name,
+        username: this.editableUser.username || this.user.username,
+        job_position: this.editableUser.job_position || this.user.job_position,
+        email: this.editableUser.email || this.user.email,
+        secondary_email: this.editableUser.secondaryemail || this.user.secondaryemail,
+        department: this.editableUser.department || this.user.department,
+        profile_icon: this.user.profileIcon || null,
+  };
+
+      let headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // If you use a token
+      };
+
+      axios
+        .patch(`${this.stage_link}/user_profile`, payload, { headers })
+        .then((response) => {
+          if (response.status === 200) {
+            this.user = { ...this.editableUser };
+            alert("Profile updated successfully!");
+          } else {
+            alert("An error occurred while updating the profile.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating profile:", error);
+          alert("Failed to update profile. Please try again later.");
+        })
+        .finally(() => {
+          this.isEditing = false;
+        });
     },
     cancelEdit() {
       this.isEditing = false;
@@ -253,7 +346,9 @@ export default {
   font-size: 18px;
   margin-right: 8px; 
 }
-
+.file-input {
+  display: none;  /* Hide the file input */
+}
 .dropdown{
   position: relative;
   left: 25px;
@@ -371,13 +466,28 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px; 
-  height: 150px; 
-  border-radius: 50%; 
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
   background-color: #e6e6e6;
-  color: rgb(0, 140, 255); 
-  font-size: 100px; 
+  color: rgb(0, 140, 255);
+  font-size: 100px;
   margin-right: 8px;
+}
+
+.profile-icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.profile-img {
+  object-fit: cover;
+}
+
+.profile-icon.hover-edit:hover {
+  background-color: #ff9900; /* Hover color change */
+  cursor: pointer;
 }
 
 .profile-container {

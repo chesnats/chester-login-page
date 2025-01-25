@@ -32,9 +32,10 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a @click.prevent="navigateToProfile">Profile</a>
-                <a @click="logout">Logout</a>
+                <a @click.prevent="navigateToProfile" style="cursor: pointer;">Profile</a>
+                <a @click="logout" style="cursor: pointer;">Logout</a>
             </div>
+            
             <Loading v-if="loading" />
          </div>
         </div>
