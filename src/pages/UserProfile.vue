@@ -1,3 +1,5 @@
+tte default user on data return are not showing it disappear 
+
 <template>
   <div>
     <header>
@@ -8,7 +10,7 @@
           <Loading v-if="loading" />
         <div class="nav-links" style="cursor: pointer;">
             <a @click.prevent="navigateToHomePage"  class="mans-link">HOME</a>
-            <a @click.prevent="navigateToHomePage" class="mans-link">ABOUT ME</a>
+            <a @click.prevent="navigateToHomePage"  class="mans-link">ABOUT ME</a>
             <a @click.prevent="navigateToHomePage"  class="mans-link">MY PORTFOLIO</a>
             <a @click.prevent="navigateToHomePage"  class="mans-link">GET IN TOUCH</a>
             <a @click.prevent="navigateToHomePage"  class="mans-link">MY BLOG</a>
@@ -49,71 +51,67 @@
               <img v-if="user.profileIcon" :src="user.profileIcon" alt="Profile Icon" class="profile-image" />
               <i v-else class="fa fa-user"></i>
             </span>
-
             <span class="name"> Chester Manolo </span>
         </div>
           <div class="user-avatar" >
             <div class="profile-info">
+
               <div class="field">
                   <label>First Name</label>
                   <div v-if="!isEditing" class="field-box">{{ user.first_name }}</div>
                   <Textfield v-else v-model="editableUser.first_name" placeholder="Update your first name"
                    />
                 </div>
+
               <div class="field">
                   <label>Last Name</label>
                   <div v-if="!isEditing" class="field-box">{{ user.last_name }}</div>
                   <Textfield v-else v-model="editableUser.last_name" placeholder="Update your last name"
                    />
                 </div>
+
               <div class="field">
                   <label>Username</label>
                   <div v-if="!isEditing" class="field-box">{{ user.username }}</div>
-                  <Textfield
-                    v-else
-                    v-model="editableUser.username"
-                    placeholder="Update your username"
+                  <Textfield v-else v-model="editableUser.username" placeholder="Update your username"
                   />
               </div>
+
               <div class="field">
                   <label>Job Position</label>
                   <div v-if="!isEditing" class="field-box">{{ user.job_position }}</div>
                   <Textfield v-else v-model="editableUser.job_position" placeholder="Update your job position" 
                   />
                 </div>
+
               <div class="field">
                   <label>Address</label>
                   <div v-if="!isEditing" class="field-box">{{ user.address }}</div>
-                  <Textfield
-                    v-else
-                    v-model="editableUser.address"
-                    placeholder="Update your address"
+                  <Textfield v-else v-model="editableUser.address" placeholder="Update your address"
                   />
               </div>
+
               <div class="field">
                   <label>Primary Work Email</label>
                   <div v-if="!isEditing" class="field-box">{{ user.email }}</div>
-                  <Textfield
-                    v-else
-                    v-model="editableUser.email"
-                    placeholder="Update your primary email"
+                  <Textfield v-else v-model="editableUser.email" placeholder="Update your primary email"
                   />
               </div>
+
               <div class="field">
                   <label>Secondary Work Email</label>
                   <div v-if="!isEditing" class="field-box">{{ user.secondaryemail }}</div>
-                  <Textfield
-                    v-else
-                    v-model="editableUser.secondaryemail"
-                    placeholder="Update your secondary email"  
+                  <Textfield v-else v-model="editableUser.secondaryemail" placeholder="Update your secondary email"  
                   />
               </div>
+
               <div class="field">
                   <label>Department</label>
                   <div v-if="!isEditing" class="field-box">{{ user.department }}</div>
                   <Textfield v-else v-model="editableUser.department" placeholder="Update your department" 
                   />
                 </div>
+
               <div v-if="isEditing" class="edit-actions" style="margin-top: -1rem;">
                   <button @click="saveProfile" class="save-btn">Save Changes</button>
                   <button @click="cancelEdit" class="cancel-btn">Cancel</button>
@@ -123,7 +121,7 @@
 <!-- Change Password Form -->
     <div class="password">
       <div class="password-section" v-if="showChangePassword" >
-          <div v-if="showChangePassword">
+          <div v-if="showChangePassword" >
               <h1>Change Password</h1>
               <form @submit.prevent="updatePassword">
                 <div class="field">
@@ -174,7 +172,7 @@
 <script>
 import Textfield from "@/components/Textfield.vue";
 import Loading from "@/components/Loading.vue"; 
-import axios from 'axios';
+import axios from "axios";
 import Button from "@/components/Button.vue";
 
 export default {
@@ -188,21 +186,23 @@ export default {
   data() {
     return {
       showChangePassword: false,
-      
       loading: false, 
-      stage_link: 'https://aapistage.newalchemysolutions.com',
+      stage_link: "https://aapistage.newalchemysolutions.com",
+      storedPassword: localStorage.getItem("user_password") || "",
       user: {
         first_name: "Chester",
         last_name: "Manolo",
-        username: localStorage.getItem("login_user") || "Guest",
+        username: localStorage.getItem("login_user"),
         job_position: "Front End Developer",
-        email: "user@example.com",
-        secondaryemail: "user1@example.com",
+        email: "nap.cmanolo@gmail.com",
+        secondaryemail: "klaychestermans425@gmail.com",
         department: "Developer",
         address: "Alegria, Cebu",
-         profileIcon: null
+        profileIcon: null,
       },
+
       isEditing: false,
+
       editableUser: {
         first_name: "",
         last_name: "",
@@ -218,25 +218,84 @@ export default {
         newPassword: "",
         confirmPassword: "",
       },
-      storedPassword: localStorage.getItem("user_password") || "manss", 
     };
   },
+  mounted() {
+    this.user();
+    this.getUserProfile(); 
+  },
+
   methods: {
-    handleProfileIconChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.user.profileIcon = URL.createObjectURL(file);
-      }
+
+    startEdit() {
+      this.isEditing = true;
     },
-    async navigateToHomePage() {
-      this.loading = true;
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 500)); 
-        this.$router.push({ name: "Home" });
-      } finally {
-        this.loading = false;
-      }
+
+    saveProfile() {
+      this.updateUserProfile(); 
+      this.user = { ...this.editableUser }; 
+      this.isEditing = false; 
     },
+
+    cancelEdit() {
+      this.isEditing = false;
+      this.editableUser = { ...this.user };
+    },
+
+    enableEdit() {
+      this.editableUser = { ...this.user };
+      this.isEditing = true;
+      this.showChangePassword = false;
+    },
+
+    getUserProfile() {
+      // let headers = {
+      //   "Conten-Type": "application/json",
+      //   "Gui" : "Verification"
+      // };
+      // fetch
+      // let headers = localStorage.getItem('headers')
+      let headers = JSON.parse(localStorage.getItem('headers'));
+      /**
+       * domain/endpoint, payload (only if needed and the Request is POST, PATCH, DELETE), headers
+       */
+
+      axios.get(`${this.stage_link}/user_profile`, { headers: headers })
+          .then(response => {
+           console.log('User Profile:', response.data);
+           this.user = { ...response.data };
+           this.editableUser = { ...this.user };
+        })
+    }, 
+
+    updateUserProfile() {
+      let payload = {
+        first_name: this.editableUser.first_name,
+        last_name: this.editableUser.last_name,
+        username: this.editableUser.username,
+        job_position: this.editableUser.job_position,
+        email: this.editableUser.email,
+        secondaryemail: this.editableUser.secondaryemail,
+        department: this.editableUser.department,
+      };
+
+      let headers = JSON.parse(localStorage.getItem('headers'));
+
+      axios
+        .patch(`${this.stage_link}/user_profile`, payload, { headers })
+        .then((response) => {
+          console.log('User profile updated successfully:', response.data);
+          this.isEditing = false;
+          this.user = { ...this.editableUser };
+
+          localStorage.setItem('user_profile', JSON.stringify(this.user));
+     
+        })
+        .catch((error) => {
+          console.error('Error updating user profile:', error);
+        });
+    },
+    
     logout() {
         this.loading = true;
   
@@ -258,77 +317,63 @@ export default {
         }
        })
       },
-    enableEdit() {
-      this.editableUser = { ...this.user };
-      this.isEditing = true;
-      this.showChangePassword = false;
+
+    handleProfileIconChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.user.profileIcon = URL.createObjectURL(file);
+      }
     },
+    async navigateToHomePage() {
+      this.loading = true;
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 500)); 
+        this.$router.push({ name: "Home" });
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    triggerFileInput() {
+      if (this.isEditing) {
+        this.$refs.fileInput.click(); 
+      }
+    },
+
     toggleChangePassword() {
       this.isEditing = false;
       this.showChangePassword = true;
     },
-    triggerFileInput() {
-      if (this.isEditing) {
-        this.$refs.fileInput.click(); // Open file selector
-      }
-    },
-    saveProfile() {
-      const payload = {
-        first_name: this.editableUser.first_name || this.user.first_name,
-        last_name: this.editableUser.last_name || this.user.last_name,
-        username: this.editableUser.username || this.user.username,
-        job_position: this.editableUser.job_position || this.user.job_position,
-        email: this.editableUser.email || this.user.email,
-        secondary_email: this.editableUser.secondaryemail || this.user.secondaryemail,
-        department: this.editableUser.department || this.user.department,
-        profile_icon: this.user.profileIcon || null,
-  };
-
-      let headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // If you use a token
-      };
-
-      axios
-        .patch(`${this.stage_link}/user_profile`, payload, { headers })
-        .then((response) => {
-          if (response.status === 200) {
-            this.user = { ...this.editableUser };
-            alert("Profile updated successfully!");
-          } else {
-            alert("An error occurred while updating the profile.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error updating profile:", error);
-          alert("Failed to update profile. Please try again later.");
-        })
-        .finally(() => {
-          this.isEditing = false;
-        });
-    },
-    cancelEdit() {
-      this.isEditing = false;
-      this.editableUser = { ...this.user };
-    },
+    
     cancelChangePassword() {
       this.showChangePassword = false;
     },
     updatePassword() {
-      if (this.password.oldPassword === this.storedPassword) {
-        if (this.password.newPassword === this.password.confirmPassword) {
-          this.storedPassword = this.password.newPassword;
-          localStorage.setItem("user_password", this.storedPassword);
-          alert("Password updated successfully!");
-          this.password = { oldPassword: "", newPassword: "", confirmPassword: "" };
-          this.showChangePassword = false;
-        } else {
-          alert("New password and confirmation do not match.");
+    if (this.password.oldPassword.trim() === this.storedPassword.trim()) {
+      if (this.password.newPassword === this.password.confirmPassword) {
+        
+        const payload = {
+          old_password: this.password.oldPassword,
+          new_password: this.password.newPassword,
+        };
+
+        let headers = JSON.parse(localStorage.getItem('headers'));
+        console.log('Headers:', headers); 
+
+   
+        axios.patch(`${this.stage_link}/update_password`, payload, { headers })
+          .then((response) => {
+            console.log(response.data); 
+
+            this.password = { oldPassword: "", newPassword: "", confirmPassword: "" };
+            this.showChangePassword = false;
+            
+            localStorage.setItem("user_password", this.password.newPassword);
+            this.storedPassword = this.password.newPassword; 
+          })
         }
-      } else {
-        alert("Old password is incorrect.");
       }
-    },
+    }
   },
 };
 </script>

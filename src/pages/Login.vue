@@ -127,7 +127,17 @@ export default {
             localStorage.setItem('login_user', this.username); 
             localStorage.setItem('login_message', 'User successfully logged in.');
             localStorage.setItem('login_data', JSON.stringify(response?.data?.data));
-    
+            /**
+             * Headers:
+             * Content-Type
+             * Authorization
+             * Gui
+             */
+        let authorization = `Bearer ${response.data.meta.access_token}`
+            headers.Authorization = authorization
+            // localStorage.setItem('headers', headers)
+            localStorage.setItem('headers', JSON.stringify(headers));
+            
           if (this.$route.path !== "/home") {
               this.$router.push("/home");
           }
