@@ -56,24 +56,21 @@
 
               <div class="field">
                   <label>First Name</label>
-                  <div v-if="!isEditing" class="field-box">{{ user.first_name }}</div>
-                  <Textfield v-else v-model="editableUser.first_name" placeholder="Update your first name"
-                   />
+                  <div v-if="!isEditing" class="field-box">{{ this.user.first_name }}</div>
+                  <Textfield v-else v-model="editableUser.first_name" placeholder="Update your first name" />
                 </div>
 
-              <div class="field">
+                <div class="field">
                   <label>Last Name</label>
                   <div v-if="!isEditing" class="field-box">{{ user.last_name }}</div>
-                  <Textfield v-else v-model="editableUser.last_name" placeholder="Update your last name"
-                   />
+                  <Textfield v-else v-model="editableUser.last_name" placeholder="Update your last name" />
                 </div>
 
-              <div class="field">
+                <div class="field">
                   <label>Username</label>
                   <div v-if="!isEditing" class="field-box">{{ user.username }}</div>
-                  <Textfield v-else v-model="editableUser.username" placeholder="Update your username"
-                  />
-              </div>
+                  <Textfield v-else v-model="editableUser.username" placeholder="Update your username" />
+                </div>
 
               <div class="field">
                   <label>Job Position</label>
@@ -183,10 +180,6 @@ export default {
 
   data() {
     return {
-      showChangePassword: false,
-      loading: false, 
-      stage_link: "https://aapistage.newalchemysolutions.com",
-
       user: {
         first_name: "Chester",
         last_name: "Manolo",
@@ -198,6 +191,11 @@ export default {
         address: "Alegria, Cebu",
         profileIcon: null,
       },
+
+      showChangePassword: false,
+      loading: false, 
+      stage_link: "https://aapistage.newalchemysolutions.com",
+
 
       isEditing: false,
 
@@ -218,40 +216,49 @@ export default {
       },
     };
   },
-  mounted() {
-    this.user();
-    this.getUserProfile(); 
-  },
 
-  methods: {
+mounted() {
+  this.getUser();
+  },
+  
+methods: {
+
+  async getUser() {
+    try {
+      
+      let headers = JSON.parse(localStorage.getItem('headers'));
+      console.log("Headers", headers);
+
+      const response = await axios.get(`${this.stage_link}/user_profile`, { headers });
+      console.log('User Profile Response:', response.data);
+          this.user = response.data;
+          this.editableUser = { ...this.user };
+          localStorage.setItem("user_profile", JSON.stringify(this.user));
+
+    } catch (error) {
+      console.error('Error', error);
+    }
+  },
+    setUserData(data) {
+        this.user = {
+          first_name: data?.first_name || "Chester",
+          last_name: data?.last_name || "Manolo",
+          username: data?.username || localStorage.getItem("login_user"),
+          job_position: data?.job_position || "Front End Developer",
+          email: data?.email || "nap.cmanolo@gmail.com",
+          secondaryemail: data?.secondaryemail || "klaychestermans425@gmail.com",
+          department: data?.department || "Developer",
+          address: data?.address || "Alegria, Cebu",
+          profileIcon: data?.profileIcon || null,
+        };
+        this.editableUser = { ...this.user };
+      },
 
     saveProfile() {
       this.updateUserProfile(); 
       this.user = { ...this.editableUser }; 
       this.isEditing = false; 
     },
-
-    getUserProfile() {
-      // let headers = {
-      //   "Conten-Type": "application/json",
-      //   "Gui" : "Verification"
-      // };
-      // fetch
-      // let headers = localStorage.getItem('headers')
-      let headers = JSON.parse(localStorage.getItem('headers'));
-      console.log("Headers being sent:", headers);
-      /**
-       * domain/endpoint, payload (only if needed and the Request is POST, PATCH, DELETE), headers
-       */
-
-      axios.get(`${this.stage_link}/user_profile`, { headers: headers })
-          .then(response => {
-           console.log('User Profile:', response.data);
-           this.user = { ...response.data };
-           this.editableUser = { ...this.user };
-           localStorage.setItem("user_profile", JSON.stringify(this.user));
-        })
-    }, 
 
     updateUserProfile() {
     let payload = {
@@ -267,8 +274,7 @@ export default {
 
       let headers = JSON.parse(localStorage.getItem('headers'));
 
-      axios
-        .patch(`${this.stage_link}/user_profile`, payload, { headers })
+      axios.patch(`${this.stage_link}/user_profile`, payload, { headers })
         .then((response) => {
           console.log('User profile updated successfully:', response.data);
           this.isEditing = false;
