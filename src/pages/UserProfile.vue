@@ -1,5 +1,3 @@
-tte default user on data return are not showing it disappear 
-
 <template>
   <div>
     <header>
@@ -188,7 +186,7 @@ export default {
       showChangePassword: false,
       loading: false, 
       stage_link: "https://aapistage.newalchemysolutions.com",
-      storedPassword: localStorage.getItem("user_password") || "",
+
       user: {
         first_name: "Chester",
         last_name: "Manolo",
@@ -227,25 +225,10 @@ export default {
 
   methods: {
 
-    startEdit() {
-      this.isEditing = true;
-    },
-
     saveProfile() {
       this.updateUserProfile(); 
       this.user = { ...this.editableUser }; 
       this.isEditing = false; 
-    },
-
-    cancelEdit() {
-      this.isEditing = false;
-      this.editableUser = { ...this.user };
-    },
-
-    enableEdit() {
-      this.editableUser = { ...this.user };
-      this.isEditing = true;
-      this.showChangePassword = false;
     },
 
     getUserProfile() {
@@ -256,6 +239,7 @@ export default {
       // fetch
       // let headers = localStorage.getItem('headers')
       let headers = JSON.parse(localStorage.getItem('headers'));
+      console.log("Headers being sent:", headers);
       /**
        * domain/endpoint, payload (only if needed and the Request is POST, PATCH, DELETE), headers
        */
@@ -265,11 +249,12 @@ export default {
            console.log('User Profile:', response.data);
            this.user = { ...response.data };
            this.editableUser = { ...this.user };
+           localStorage.setItem("user_profile", JSON.stringify(this.user));
         })
     }, 
 
     updateUserProfile() {
-      let payload = {
+    let payload = {
         first_name: this.editableUser.first_name,
         last_name: this.editableUser.last_name,
         username: this.editableUser.username,
@@ -278,6 +263,7 @@ export default {
         secondaryemail: this.editableUser.secondaryemail,
         department: this.editableUser.department,
       };
+      console.log("Updating with payload:", payload);
 
       let headers = JSON.parse(localStorage.getItem('headers'));
 
@@ -292,8 +278,14 @@ export default {
      
         })
         .catch((error) => {
-          console.error('Error updating user profile:', error);
-        });
+            if (error.response) {
+              console.error('Error response:', error.response.data);
+            } else if (error.request) {
+              console.error('Error request:', error.request);
+            } else {
+              console.error('Error message:', error.message);
+            }
+          });
     },
     
     logout() {
@@ -318,12 +310,23 @@ export default {
        })
       },
 
+    cancelEdit() {
+      this.isEditing = false;
+      this.editableUser = { ...this.user };
+    },
+
+    enableEdit() {
+      this.editableUser = { ...this.user };
+      this.isEditing = true;
+      this.showChangePassword = false;
+    },
     handleProfileIconChange(event) {
       const file = event.target.files[0];
       if (file) {
         this.user.profileIcon = URL.createObjectURL(file);
       }
     },
+
     async navigateToHomePage() {
       this.loading = true;
       try {
@@ -349,31 +352,27 @@ export default {
       this.showChangePassword = false;
     },
     updatePassword() {
-    if (this.password.oldPassword.trim() === this.storedPassword.trim()) {
-      if (this.password.newPassword === this.password.confirmPassword) {
-        
-        const payload = {
-          old_password: this.password.oldPassword,
-          new_password: this.password.newPassword,
-        };
+      
+      if (this.password.oldPassword === this.storedPassword) {
+        if (this.password.newPassword === this.password.confirmPassword) {
+          
+          this.storedPassword = this.password.newPassword;
+          
+          localStorage.setItem("user_password", this.storedPassword);
+          alert("Password updated successfully!");
 
-        let headers = JSON.parse(localStorage.getItem('headers'));
-        console.log('Headers:', headers); 
+          this.password = { oldPassword: "", newPassword: "", confirmPassword: "" };
+          this.showChangePassword = false;
+          
 
-   
-        axios.patch(`${this.stage_link}/update_password`, payload, { headers })
-          .then((response) => {
-            console.log(response.data); 
-
-            this.password = { oldPassword: "", newPassword: "", confirmPassword: "" };
-            this.showChangePassword = false;
-            
-            localStorage.setItem("user_password", this.password.newPassword);
-            this.storedPassword = this.password.newPassword; 
-          })
-        }
+      } else {
+        alert("New password and confirmation do not match.");
       }
-    }
+
+      } else {
+        alert("Old password is incorrect.");
+      }
+    },
   },
 };
 </script>
